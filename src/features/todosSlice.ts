@@ -16,10 +16,12 @@ export interface Todo {
 
 interface initialStateProps {
   todos: Todo[];
+  user: string;
 }
 
 const initialState: initialStateProps = {
   todos: [],
+  user: "Dennis",
 };
 
 const todosSlice = createSlice({

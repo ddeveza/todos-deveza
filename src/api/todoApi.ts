@@ -1,4 +1,14 @@
-import { collection, Firestore, query, where } from "firebase/firestore";
+import { uuidv4 } from "@firebase/util";
+import {
+  collection,
+  doc,
+  Firestore,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { Todo, TodoStatus } from "../features/todosSlice";
+import { db } from "../firebase";
 
 export default class Todos {
   static get(db: Firestore, docID: string) {
@@ -6,6 +16,40 @@ export default class Todos {
     return query(col, where("__name__", "==", docID));
   }
 
+  static async add(currentTodos: Todo[], todo: Partial<Todo>, userID: string) {
+    const itemRef = doc(db, "todos", userID);
+
+    //getall todo
+    //[...allTodo , { dateCreated , dateUpdated , id :uuid,  }]
+
+    await setDoc(itemRef, {
+      todos: [
+        ...currentTodos,
+        {
+          id: uuidv4(),
+          dateCreated: new Date(),
+          dateUpdated: new Date(),
+          status: TodoStatus.Todo,
+          todo: todo.todo,
+        },
+      ],
+    });
+  }
+
+  /*  async update(userID: string, todoID: string, todo: Todo) {
+    const itemRef = doc(db, "todos", userID);
+
+    //getAllTodo
+    //map all todo
+    //each todo
+    //kapag todoID equal sa current todo update the todo id
+    //kunin ko each todo {...todo , dateUpdated: new Date() , todo: todo.todo , status : todo.status }}
+
+    setDoc(itemRef, {
+      todos,
+    });
+  }
+ */
   //query data from database
   //dispatch an action to save from redux
 }
