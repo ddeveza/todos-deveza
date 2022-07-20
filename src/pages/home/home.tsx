@@ -18,7 +18,9 @@ export default function Home() {
     return <div>Loading......</div>;
   }
 
-  const handleSave = (id: string) => {};
+  const handleSave = (id: string) => {
+    Todos.update(todos, { todo: "Updated", id }, "Dennis");
+  };
 
   const handleClick = () => {
     Todos.add(todos, { todo: "Add" }, "Dennis");
@@ -28,10 +30,10 @@ export default function Home() {
     <div>
       <button onClick={handleClick}>Add Todo</button>
       {todos?.map((todo) => (
-        <>
-          <li key={todo.id}>{todo.todo}</li>
-          <button onClick={() => handleSave(todo.id)}>save</button>
-        </>
+        <div key={todo.id}>
+          <li>{todo.todo}</li>
+          <button onClick={() => handleSave(todo.id)}>edit</button>
+        </div>
       ))}
     </div>
   );

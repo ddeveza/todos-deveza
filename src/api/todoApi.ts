@@ -19,9 +19,6 @@ export default class Todos {
   static async add(currentTodos: Todo[], todo: Partial<Todo>, userID: string) {
     const itemRef = doc(db, "todos", userID);
 
-    //getall todo
-    //[...allTodo , { dateCreated , dateUpdated , id :uuid,  }]
-
     await setDoc(itemRef, {
       todos: [
         ...currentTodos,
@@ -33,6 +30,30 @@ export default class Todos {
           todo: todo.todo,
         },
       ],
+    });
+  }
+
+  static async update(
+    currentTodos: Todo[],
+    todo: Partial<Todo>,
+    userID: string
+  ) {
+    const itemRef = doc(db, "todos", userID);
+
+    const newTodo = currentTodos.map((prevTodo) => {
+      if (prevTodo.id === todo.id) {
+        return {
+          ...prevTodo,
+          ...todo,
+          dateUpdated: new Date(),
+        };
+      }
+
+      return prevTodo;
+    });
+
+    await setDoc(itemRef, {
+      todos: newTodo,
     });
   }
 
