@@ -9,14 +9,14 @@ function App() {
   const location = useLocation();
   const firestoreInstance = getFirestore(useFirebaseApp());
   return (
-    <Routes location={location} key={location.key}>
-      <FirestoreProvider sdk={firestoreInstance}>
-        <Suspense fallback={<div>Loading...</div>}>
+    <FirestoreProvider sdk={firestoreInstance}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes location={location} key={location.key}>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
-        </Suspense>
-      </FirestoreProvider>
-    </Routes>
+        </Routes>
+      </Suspense>
+    </FirestoreProvider>
   );
 }
 
