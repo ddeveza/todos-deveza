@@ -7,7 +7,7 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import moment from "moment";
+import {} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Todo, TodoStatus } from "../features/todosSlice";
@@ -31,12 +31,12 @@ export default function TodoCard({
         setColor("green");
         break;
       case TodoStatus.InProcess:
-        setColor("yellow");
+        setColor("indigo");
         break;
       default:
         break;
     }
-  }, []);
+  }, [status]);
 
   return (
     <div style={{ width: 340, margin: "auto" }}>
@@ -55,13 +55,13 @@ export default function TodoCard({
           size="sm"
           style={{ color: theme.colors.gray[7], lineHeight: 1.5 }}
         >
-          {`Date Created: ${moment(dateCreated)}`}
+          {`Date Created: ${dateCreated.toDate()}`}
         </Text>
         <Text
           size="sm"
           style={{ color: theme.colors.gray[7], lineHeight: 1.5 }}
         >
-          {`Date Updated: ${moment(dateUpdated)}`}
+          {`Date Updated: ${dateUpdated.toDate()}`}
         </Text>
 
         <Button

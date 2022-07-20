@@ -5,10 +5,8 @@ import { FirestoreProvider, useFirebaseApp } from "reactfire";
 
 import AddEditLayout from "./layout/AddEditLayout";
 import AuthLayout from "./layout/authLayout";
-import {
-  default as AddEditForm,
-  default as AddForm,
-} from "./pages/AddEditTodo/AddForm";
+import { default as AddForm } from "./pages/AddEditTodo/AddForm";
+import EditForm from "./pages/AddEditTodo/EditForm";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
@@ -22,8 +20,8 @@ function App() {
         <Routes location={location} key={location.key}>
           <Route path="home" element={<Home />} />
           <Route path="/" element={<AddEditLayout />}>
-            <Route path="/add" element={<AddForm />} />
-            <Route path="/edit/:id" element={<AddEditForm />} />
+            <Route path="add" element={<AddForm />} />
+            <Route path="edit/:id" element={<EditForm />} />
           </Route>
 
           <Route path="/" element={<AuthLayout pathname={location.pathname} />}>

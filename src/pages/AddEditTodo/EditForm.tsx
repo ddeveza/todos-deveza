@@ -1,7 +1,7 @@
 import { faArrowLeft, faTasks } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Group, Select, Stack, Text, TextInput } from "@mantine/core";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import Todos from "../../api/todoApi";
@@ -24,9 +24,15 @@ export default function EditForm() {
     () => todos.find((todo) => todo.id === selectedTodoID),
     [selectedTodoID, todos]
   );
+  const [status, setStatus] = useState(selectedTodo?.status);
+
   const handleSubmit = async (value: any) => {
-    Todos.update(todos, value, uid);
+    Todos.update(todos, { ...value, id: selectedTodoID }, uid);
     navigate("/home");
+  };
+
+  const handleChange = (value: TodoStatus) => {
+    setStatus(value);
   };
 
   return (
@@ -39,16 +45,14 @@ export default function EditForm() {
       <Stack spacing={5}>
         <TextInput
           label="Todo"
-          placeholder="Add Todo"
           {...getInputProps("todo")}
           icon={<FontAwesomeIcon icon={faTasks} />}
-        >
-          {selectedTodo?.todo}
-        </TextInput>
+        />
+
         <Select
           label="Todo Status"
           placeholder="Update Status ?"
-          value={selectedTodo?.status}
+          {...getInputProps("status")}
           data={[
             { value: TodoStatus.Completed, label: "Completed" },
             { value: TodoStatus.InProcess, label: "In Process" },
@@ -58,7 +62,7 @@ export default function EditForm() {
 
         <Group position="center" mt="3rem">
           <Button type="submit" px={50}>
-            Add Todo
+            Update Todo
           </Button>
         </Group>
       </Stack>

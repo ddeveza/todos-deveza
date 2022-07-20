@@ -10,8 +10,8 @@ export interface Todo {
   todo: string;
   id: string;
   status: TodoStatus;
-  dateCreated: Date;
-  dateUpdated: Date;
+  dateCreated: any;
+  dateUpdated: any;
 }
 
 interface initialStateProps {

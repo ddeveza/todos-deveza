@@ -2,7 +2,6 @@ import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirestore } from "reactfire";
-import Todos from "../../api/todoApi";
 import TodoCard from "../../component/Card";
 import Header from "../../component/Header";
 import { RootState } from "../../features/store";
@@ -23,13 +22,6 @@ export default function Home() {
     return <div>Loading......</div>;
   }
 
-  /* to add  Todo */
-
-  /* to save the edited Todo */
-  const handleSave = (id: string) => {
-    Todos.update(todos, { todo: "Updated", id }, uid);
-  };
-
   return (
     <>
       <Header email={email} />
@@ -44,8 +36,6 @@ export default function Home() {
         <div className="home_todolist">
           {todos?.map((todo) => (
             <div key={todo.id}>
-              {/* <li>{todo.todo}</li>
-              <button onClick={() => handleSave(todo.id)}>edit</button> */}
               <TodoCard {...todo} />
             </div>
           ))}
