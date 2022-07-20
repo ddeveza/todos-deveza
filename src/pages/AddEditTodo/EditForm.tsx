@@ -1,7 +1,7 @@
 import { faArrowLeft, faTasks } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Group, Select, Stack, Text, TextInput } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import Todos from "../../api/todoApi";
@@ -24,15 +24,10 @@ export default function EditForm() {
     () => todos.find((todo) => todo.id === selectedTodoID),
     [selectedTodoID, todos]
   );
-  const [status, setStatus] = useState(selectedTodo?.status);
 
   const handleSubmit = async (value: any) => {
     Todos.update(todos, { ...value, id: selectedTodoID }, uid);
     navigate("/home");
-  };
-
-  const handleChange = (value: TodoStatus) => {
-    setStatus(value);
   };
 
   return (
