@@ -18,12 +18,14 @@ export default function Home() {
     return <div>Loading......</div>;
   }
 
-  const handleSave = (id: string) => {
-    Todos.update(todos, { todo: "Updated", id }, "Dennis");
-  };
-
+  /* to add  Todo */
   const handleClick = () => {
     Todos.add(todos, { todo: "Add" }, "Dennis");
+  };
+
+  /* to save the edited Todo */
+  const handleSave = (id: string) => {
+    Todos.update(todos, { todo: "Updated", id }, "Dennis");
   };
 
   return (
