@@ -1,17 +1,28 @@
 import { faKey, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Group, Stack, Text, TextInput } from "@mantine/core";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "../../api/authApit";
+import { setUser } from "../../features/todosSlice";
 import { useLoginForm } from "./hook";
 
 export function Login() {
   const { onSubmit, getInputProps } = useLoginForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (values: any) => {
     const response = await Auth.signin(values);
-    console.log(response);
+    if (response) {
+      dispatch(
+        setUser({
+          email: response?.user?.email ?? "",
+          uid: response?.user?.uid,
+        })
+      );
+      navigate("/home", { replace: true });
+    }
   };
 
   return (
@@ -19,8 +30,9 @@ export function Login() {
       <Stack spacing={5}>
         <TextInput
           label="Email"
+          type="email"
           placeholder="login email"
-          {...getInputProps("user")}
+          {...getInputProps("email")}
           icon={<FontAwesomeIcon icon={faUser} />}
         />
         <TextInput

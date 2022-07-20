@@ -6,9 +6,6 @@ export function useRegistrationForm() {
     initialValues: {
       email: "",
       password: "",
-      confirmPassword: "",
-      name: "",
-      phone: "",
     },
     schema: yupResolver(registrationSchema),
   });

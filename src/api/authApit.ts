@@ -25,13 +25,23 @@ export default class Auth {
 
   static async signup({ email, password }: any) {
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      const refDoc = doc(db, "Todos", res.user.uid);
-      await setDoc(refDoc, {
-        todos: [],
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).catch((err) => {
+        alert(err);
       });
+      if (res) {
+        const refDoc = doc(db, "todos", res.user.uid);
+        await setDoc(refDoc, {
+          todos: [],
+        });
+
+        return res;
+      }
     } catch (error) {
-      console.log("Unable to signUp");
+      alert(error);
     }
   }
 }

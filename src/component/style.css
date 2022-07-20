@@ -1,0 +1,12 @@
+
+
+.header_content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header_content > * {
+  flex: 1;
+ 
+}

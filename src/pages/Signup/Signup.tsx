@@ -10,7 +10,11 @@ export default function Signup() {
   const { getInputProps, onSubmit } = useRegistrationForm();
 
   const handleSubmit = async (value: any) => {
-    await Auth.signup(value);
+    const response = await Auth.signup(value);
+    if (response) {
+      alert("Registered Succesfully");
+      navigate("/", { replace: true });
+    }
   };
 
   return (
@@ -23,6 +27,7 @@ export default function Signup() {
       <Stack spacing={5}>
         <TextInput
           label="Email"
+          type="email"
           placeholder="login email"
           {...getInputProps("email")}
           icon={<FontAwesomeIcon icon={faUser} />}

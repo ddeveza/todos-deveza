@@ -16,12 +16,18 @@ export interface Todo {
 
 interface initialStateProps {
   todos: Todo[];
-  user: string;
+  user: {
+    email: string;
+    uid: string;
+  };
 }
 
 const initialState: initialStateProps = {
   todos: [],
-  user: "Dennis",
+  user: {
+    email: "",
+    uid: "",
+  },
 };
 
 const todosSlice = createSlice({
@@ -34,9 +40,15 @@ const todosSlice = createSlice({
     ) => {
       state.todos = payload;
     },
+    setUser: (
+      state: initialStateProps,
+      { payload }: PayloadAction<{ email: string; uid: string }>
+    ) => {
+      state.user = payload;
+    },
   },
 });
 
-export const { saveTodos } = todosSlice.actions;
+export const { saveTodos, setUser } = todosSlice.actions;
 
 export default todosSlice.reducer;

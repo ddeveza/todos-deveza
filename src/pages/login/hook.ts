@@ -4,7 +4,7 @@ import { formFieldsSchema } from "./schema";
 export const useLoginForm = () => {
   return useForm({
     initialValues: {
-      user: "",
+      email: "",
       password: "",
     },
     schema: yupResolver(formFieldsSchema),

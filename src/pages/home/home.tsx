@@ -1,14 +1,19 @@
+import { Button } from "@mantine/core";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { useFirestore } from "reactfire";
 import Todos from "../../api/todoApi";
+import TodoCard from "../../component/Card";
+import Header from "../../component/Header";
+import { RootState } from "../../features/store";
 import { useGetProjects } from "./hook";
+import "./styles.css";
 
 export default function Home() {
+  const { uid, email } = useSelector((state: RootState) => state.todos.user);
   const db = useFirestore();
-  const {
-    data: todos,
-    error,
-    status,
-  } = useGetProjects({ db, userID: "Dennis" });
+  const navigate = useNavigate();
+  const { data: todos, error, status } = useGetProjects({ db, userID: uid });
 
   if (error) {
     return <div>Error {error.message}</div>;
@@ -19,24 +24,33 @@ export default function Home() {
   }
 
   /* to add  Todo */
-  const handleClick = () => {
-    Todos.add(todos, { todo: "Add" }, "Dennis");
-  };
 
   /* to save the edited Todo */
   const handleSave = (id: string) => {
-    Todos.update(todos, { todo: "Updated", id }, "Dennis");
+    Todos.update(todos, { todo: "Updated", id }, uid);
   };
 
   return (
-    <div>
-      <button onClick={handleClick}>Add Todo</button>
-      {todos?.map((todo) => (
-        <div key={todo.id}>
-          <li>{todo.todo}</li>
-          <button onClick={() => handleSave(todo.id)}>edit</button>
+    <>
+      <Header email={email} />
+
+      <div className="home_content">
+        <div>
+          <Button component={Link} to="/add">
+            Add Todo
+          </Button>
         </div>
-      ))}
-    </div>
+
+        <div className="home_todolist">
+          {todos?.map((todo) => (
+            <div key={todo.id}>
+              {/* <li>{todo.todo}</li>
+              <button onClick={() => handleSave(todo.id)}>edit</button> */}
+              <TodoCard {...todo} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

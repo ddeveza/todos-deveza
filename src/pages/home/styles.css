@@ -1,0 +1,14 @@
+.home_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
+.home_todolist {
+  display: flex;
+  gap:3rem;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-top: 3rem;
+}
