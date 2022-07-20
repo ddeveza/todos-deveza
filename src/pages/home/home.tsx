@@ -3,8 +3,25 @@ import { useGetProjects } from "./hook";
 
 export default function Home() {
   const db = useFirestore();
-  const todos = useGetProjects({ db, userID: "Dennis" });
+  const {
+    data: todos,
+    error,
+    status,
+  } = useGetProjects({ db, userID: "Dennis" });
 
-  console.log(todos);
-  return <div>Home</div>;
+  if (error) {
+    return <div>Error {error.message}</div>;
+  }
+
+  if (status === "loading") {
+    return <div>Loading......</div>;
+  }
+
+  return (
+    <div>
+      {todos?.map((todo) => (
+        <li>{todo.todo}</li>
+      ))}
+    </div>
+  );
 }

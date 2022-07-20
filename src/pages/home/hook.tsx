@@ -23,13 +23,5 @@ export const useGetProjects = ({ db, userID }: GetProjectsProps) => {
     }
   }, [status, dispatch, data]);
 
-  if (error) {
-    return <div>Error {error.message}</div>;
-  }
-
-  if (status === "loading") {
-    return <div>Loading......</div>;
-  }
-
-  return data[0];
+  return { data: data[0], error, status };
 };
