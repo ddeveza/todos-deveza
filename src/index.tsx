@@ -2,8 +2,10 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { FirebaseAppProvider } from "reactfire";
 import App from "./App";
 import { store } from "./features/store";
+import { firebaseConfig } from "./firebase";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -14,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <FirebaseAppProvider firebaseConfig={firebaseConfig} suspense>
+          <App />
+        </FirebaseAppProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
